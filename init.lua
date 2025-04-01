@@ -5,7 +5,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -282,10 +282,6 @@ require('lazy').setup({
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
     config = function()
-      -- Telescope is a fuzzy finder that comes with a lot of different things that
-      -- it can fuzzy find! It's more than just a "file finder", it can search
-      -- many different aspects of Neovim, your workspace, LSP, and more!
-      --
       -- The easiest way to use Telescope, is to start by doing something like:
       --  :Telescope help_tags
       --
@@ -393,31 +389,6 @@ require('lazy').setup({
       'hrsh7th/cmp-nvim-lsp',
     },
     config = function()
-      -- Brief aside: **What is LSP?**
-      --
-      -- LSP is an initialism you've probably heard, but might not understand what it is.
-      --
-      -- LSP stands for Language Server Protocol. It's a protocol that helps editors
-      -- and language tooling communicate in a standardized fashion.
-      --
-      -- In general, you have a "server" which is some tool built to understand a particular
-      -- language (such as `gopls`, `lua_ls`, `rust_analyzer`, etc.). These Language Servers
-      -- (sometimes called LSP servers, but that's kind of like ATM Machine) are standalone
-      -- processes that communicate with some "client" - in this case, Neovim!
-      --
-      -- LSP provides Neovim with features like:
-      --  - Go to definition
-      --  - Find references
-      --  - Autocompletion
-      --  - Symbol Search
-      --  - and more!
-      --
-      -- Thus, Language Servers are external tools that must be installed separately from
-      -- Neovim. This is where `mason` and related plugins come into play.
-      --
-      -- If you're wondering about lsp vs treesitter, you can check out the wonderfully
-      -- and elegantly composed help section, `:help lsp-vs-treesitter`
-
       --  This function gets run when an LSP attaches to a particular buffer.
       --    That is to say, every time a new file is opened that is associated with
       --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
@@ -425,10 +396,7 @@ require('lazy').setup({
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
-          -- NOTE: Remember that Lua is a real programming language, and as such it is possible
-          -- to define small helper and utility functions so you don't have to repeat yourself.
-          --
-          -- In this case, we create a function that lets us more easily define mappings specific
+          -- We create a function that lets us more easily define mappings specific
           -- for LSP related items. It sets the mode, buffer and description for us each time.
           local map = function(keys, func, desc, mode)
             mode = mode or 'n'
@@ -658,15 +626,10 @@ require('lazy').setup({
           cmd = { "elixir-ls" },
           settings = {
             elixirLS = {
-              -- Enable diagnostics for all files in your workspace
               dialyzerEnabled = true,
-              -- Enable formatting support
               fetchDeps = true,
-              -- Enable reporting of Mix tasks for execution (mix test, mix format, etc)
               enableTestLenses = true,
-              -- Disable signature help pop-ups if you find them distracting
               signatureHelp = true,
-              -- Enable suggestions for module attributes
               suggestSpecs = true,
             }
           }
@@ -685,23 +648,16 @@ require('lazy').setup({
         ts_ls = {},
 
         lua_ls = {
-          -- cmd = { ... },
-          -- filetypes = { ... },
-          -- capabilities = {},
           settings = {
             Lua = {
               completion = {
                 callSnippet = 'Replace',
               },
-              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
               -- diagnostics = { disable = { 'missing-fields' } },
             },
           },
         },
       }
-
-      -- Ensure the servers and tools above are installed
-      --
       -- To check the current status of installed tools and/or manually install
       -- other tools, you can run
       --    :Mason
@@ -770,11 +726,39 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        --
-        -- You can use 'stop_after_first' to run the first available formatter from the list
-        -- javascript = { "prettierd", "prettier", stop_after_first = true },
+        rust = { 'rustfmt' },
+        python = { 'black' },
+        go = { 'gofmt' },
+        zig = { 'zigfmt' },
+        elixir = { 'mix' },
+        javascript = { 'prettier' },
+        typescript = { 'prettier' },
+        javascriptreact = { "prettier" },
+        typescriptreact = { "prettier" },
+        css = { "prettier" },
+        html = { "prettier" },
+        json = { "prettier" },
+        yaml = { "prettier" },
+        markdown = { "prettier" },
+      },
+      formatters = {
+        rustfmt = {
+          args = { "--edition=2021" },
+        },
+        black = {
+          args = { "--line-length", "88" },
+        },
+        prettier = {
+          prefer_local = "node_modules/.bin",
+        },
+        gleam_format = {
+          command = "gleam",
+          args = { "format" },
+        },
+        zigfmt = {
+          command = "zig",
+          args = { "fmt", "--stdin" },
+        },
       },
     },
   },
