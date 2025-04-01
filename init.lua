@@ -643,6 +643,15 @@ require('lazy').setup({
             }
           }
         },
+        omnisharp = {
+          cmd = { "omnisharp" },
+          -- cmd = { "dotnet", "csharp-ls" },
+          
+          root_dir = require("lspconfig.util").root_pattern("*.sln", "*.csproj", ".git"),
+          enable_roslyn_analyzers = true,
+          organize_imports_on_format = true,
+          enable_import_completion = true,
+        },
         gleam = {},
         omnisharp = {},
         ts_ls = {},
@@ -731,6 +740,9 @@ require('lazy').setup({
         go = { 'gofmt' },
         zig = { 'zigfmt' },
         elixir = { 'mix' },
+        c = { 'clang-format' },
+        cpp = { 'clang-format' }, 
+        cs = { "csharpier" },
         javascript = { 'prettier' },
         typescript = { 'prettier' },
         javascriptreact = { "prettier" },
