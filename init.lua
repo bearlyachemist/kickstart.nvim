@@ -740,14 +740,35 @@ require('lazy').setup({
             },
           },
         },
-        -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-        --
-        -- Some languages (like typescript) have entire language plugins that can be useful:
-        --    https://github.com/pmizio/typescript-tools.nvim
-        --
-        -- But for many setups, the LSP (`ts_ls`) will work just fine
-        -- ts_ls = {},
-        --
+        elixir_ls = {
+          cmd = { "elixir-ls" },
+          settings = {
+            elixirLS = {
+              -- Enable diagnostics for all files in your workspace
+              dialyzerEnabled = true,
+              -- Enable formatting support
+              fetchDeps = true,
+              -- Enable reporting of Mix tasks for execution (mix test, mix format, etc)
+              enableTestLenses = true,
+              -- Disable signature help pop-ups if you find them distracting
+              signatureHelp = true,
+              -- Enable suggestions for module attributes
+              suggestSpecs = true,
+            }
+          }
+        },
+        zls = {
+          settings = {
+            zls = {
+              enable_snippets = true,
+              warn_style = true,
+              enable_semantic_tokens = true,
+            }
+          }
+        },
+        gleam = {},
+        omnisharp = {},
+        ts_ls = {},
 
         lua_ls = {
           -- cmd = { ... },
@@ -780,7 +801,7 @@ require('lazy').setup({
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
-        'stylua', -- Used to format Lua code
+        'stylua',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
