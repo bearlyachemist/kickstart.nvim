@@ -179,6 +179,21 @@ require('lazy').setup({
     },
   },
 
+  {
+    "cbochs/grapple.nvim",
+    dependencies = {
+      { "nvim-lua/plenary.nvim" }
+    },
+    opts = {
+      scope = "global",
+    },
+    keys = {
+      { "<leader>m", "<cmd>Grapple toggle<cr>", desc = "Grapple toggle tag" },
+      { "<leader>M", "<cmd>Grapple toggle_tags<cr>", desc = "Grapple toggle tags menu" },
+      { "<leader><tab>", "<cmd>Grapple select index=1<cr>", desc = "Grapple select 1" },
+    },
+  },
+
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
   -- This is often very useful to both group configuration, as well as handle
