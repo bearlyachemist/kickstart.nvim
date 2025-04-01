@@ -665,7 +665,32 @@ require('lazy').setup({
         },
         omnisharp = {},
         ts_ls = {},
-
+        ocamllsp = {
+          filetypes = {
+            "ocaml",
+            "ocaml.menhir",
+            "ocaml.interface",
+            "ocaml.ocamllex",
+            "reason",
+            "dune",
+          },
+          root_dir = function(fname)
+            return require("lspconfig.util").root_pattern(
+              "*.opam",
+              "esy.json",
+              "package.json",
+              ".git",
+              "dune-project",
+              "dune-workspace",
+              "*.ml"
+            )(fname)
+          end,
+        },
+        texlab = {
+          keys = {
+            { "<Leader>K", "<plug>(vimtex-doc-package)", desc = "Vimtex Docs", silent = true },
+          },
+        },
         lua_ls = {
           settings = {
             Lua = {
