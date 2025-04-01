@@ -633,8 +633,8 @@ require('lazy').setup({
             },
           },
         },
-        elixir_ls = {
-          cmd = { "elixir-ls" },
+        elixirls = {
+          cmd = { "elixirls" },
           settings = {
             elixirLS = {
               dialyzerEnabled = true,
